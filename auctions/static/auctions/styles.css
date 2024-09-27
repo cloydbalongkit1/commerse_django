@@ -1,3 +1,14 @@
 body {
-    padding: 10px;
+    padding: 20px;
 }
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+
+.form-submit {
+    margin-top: 5px;
+}
+
