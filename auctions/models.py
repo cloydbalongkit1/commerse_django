@@ -9,7 +9,10 @@ class User(AbstractUser):
 
 class AuctionListing(models.Model):
     item_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=255)
+    image_url = models.URLField(max_length=255, blank=True)
+    category = models.CharField(max_length=50, blank=True, null=True, 
+                                choices=[('fashion', 'Fashion'), ('toys', 'Toys'), ('electronics', 'Electronics'), ('home', 'Home')])
+    description = models.TextField()
     starting_price = models.DecimalField(max_digits=12, decimal_places=2)
     current_price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     date_created = models.DateTimeField(auto_now_add=True)

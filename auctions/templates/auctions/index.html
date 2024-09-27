@@ -1,8 +1,26 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+
     <h2>Active Listings</h2>
 
-    TODO
+    <ul>
+        {% for item in items %}
+            <li>
+                {{ item.item_name }}
+                <br>
+                <img src="{{ item.image_url }}" alt="{{ item.item_name }}">
+                <br>
+                {{ item.description }}
+                <br>
+                {{ item.starting_price }}
+                <br>
+                {{ item.created_by }}
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+    
+
 {% endblock %}
 

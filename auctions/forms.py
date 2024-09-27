@@ -3,12 +3,12 @@ from django import forms
 
 
 class CreateListing(forms.Form):
-    title = forms.CharField(label="Title", max_length=60, 
+    item_name = forms.CharField(label="Item Name", max_length=60, 
             widget=forms.TextInput(attrs={
                 'class': 'title',
                 'placeholder': 'Enter title here...'
             }))
-    image_url = forms.URLField(label="Image URL", max_length=255, required=False, 
+    image_url = forms.URLField(label="Item Image URL", max_length=255, required=False, 
             widget=forms.URLInput(attrs={
                 'class': 'image-url',
                 'placeholder': 'Enter image URL here...'
