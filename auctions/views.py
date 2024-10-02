@@ -1,19 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
 
-from .models import User, AuctionListing, Bids, Comments, WatchList
+from .models import User, AuctionListing, WatchList, Bids, Comments
 from .forms import CreateListing
 
 
 
 def index(request):
-    print(request.user.is_authenticated) # return true if user is logged in
-
     auction_listings = AuctionListing.objects.all()[::-1]
     return render(request, "auctions/index.html", {
         "listings": auction_listings
@@ -31,13 +29,13 @@ def new_listing(request):
                 image_url = form.cleaned_data['image_url'],
                 category = form.cleaned_data['category'],
                 description = form.cleaned_data['description'],
-                starting_price = form.cleaned_data['starting_bid'],
+                starting_price = form.cleaned_data['starting_price'],
                 created_by = request.user
                 )
             new_list.save()
             return HttpResponseRedirect(reverse("new_listing"))
     
-    form = CreateListing
+    form = CreateListing()
     return render(request, "auctions/new_listing.html", {
         "form": form,
     })
@@ -79,6 +77,16 @@ def remove_item(request):
             messages.error(request, "Item not found in your watchlist.")
         return HttpResponseRedirect(reverse("watchlists"))
     
+
+
+@login_required
+def categories(request):
+    category = request.GET.get('category')
+    categories = AuctionListing.objects.filter(category=category)
+    return render(request, 'auctions/categories.html', {
+        'categories': categories,
+    })
+
 
 
 def login_view(request):

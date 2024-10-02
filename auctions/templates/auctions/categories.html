@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <form method="GET" action="{% url 'categories' %}">
+        <label for="categories">Choose a category:</label>
+        <select name="category">
+            <option value="">Choose a category</option>
+            <option value="fashion">Fashion</option>
+            <option value="toys">Toys</option>
+            <option value="home">Home</option>
+            <option value="electronics">Electronics</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    <br><br>
+
+    {% if categories %}
+        <p>Not categorized item/s.</p>
+        <div id="items">
+            {% for category in categories %}
+                <div>
+                    <img src="{{ category.image_url }}" alt="{{ category.item_name }}">
+                    <div>
+                        <p>Item: <a href="{% url 'listed_item' category.id %}">{{ category.item_name }}</a></p>
+                        <div class="listings">
+                            <p>Description: {{ category.description }}</p>
+                            <p>Price: <strong>${{ category.starting_price }}</strong></p>
+                            <small>Created {{ category.date_created }}</small>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    
+    {% endif %}
+
+{% endblock %}
+

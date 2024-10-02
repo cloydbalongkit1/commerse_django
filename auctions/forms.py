@@ -20,9 +20,9 @@ class CreateListing(forms.Form):
                 'class': 'image-url',
                 'placeholder': 'Enter image URL here...'
             }))
-    starting_bid = forms.DecimalField(label="Starting Bid", max_digits=12, decimal_places=2,
+    starting_price = forms.DecimalField(label="Starting price", max_digits=12, decimal_places=2,
                 widget=forms.NumberInput(attrs={
-                'class': 'starting_bid',
+                'class': 'starting_price',
                 'placeholder': 'Enter starting bid here...'
                }))
     category = forms.ChoiceField(label="Category",

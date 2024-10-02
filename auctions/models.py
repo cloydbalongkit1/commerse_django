@@ -28,7 +28,7 @@ class AuctionListing(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auction_listings")
 
     def __str__(self):
-        return f"{self.item_name} - > Start Price: {self.starting_price}"
+        return f"{self.item_name} -> Start Price: {self.starting_price}"
 
     class Meta:
         verbose_name_plural = "Auction Listings"

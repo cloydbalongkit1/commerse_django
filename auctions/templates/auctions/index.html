@@ -15,7 +15,7 @@
 
                     <div class="listings">
                         <p>Description: {{ listing.description }}</p>
-                        <p>Price: <strong>{{ listing.starting_price }}</strong></p>
+                        <p>Price: <strong>${{ listing.starting_price }}</strong></p>
 
                         {% if listing.active %}
                             <small>Item status: <strong>Active</strong></small>
