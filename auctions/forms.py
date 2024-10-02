@@ -3,6 +3,13 @@ from django import forms
 
 
 class CreateListing(forms.Form):
+    CHOICES = [('', 'Select a category'),
+                    ('fashion', 'Fashion'),
+                    ('toys', 'Toys'),
+                    ('electronics', 'Electronics'),
+                    ('home', 'Home'),]
+    
+    
     item_name = forms.CharField(label="Item Name", max_length=60, 
             widget=forms.TextInput(attrs={
                 'class': 'title',
@@ -19,12 +26,7 @@ class CreateListing(forms.Form):
                 'placeholder': 'Enter starting bid here...'
                }))
     category = forms.ChoiceField(label="Category",
-                choices=[('', 'Select a category'),
-                    ('fashion', 'Fashion'),
-                    ('toys', 'Toys'),
-                    ('electronics', 'Electronics'),
-                    ('home', 'Home'),
-                    ],
+                choices=CHOICES,
                 required=False,
                 widget=forms.Select(attrs={
                 'class': 'category_class'

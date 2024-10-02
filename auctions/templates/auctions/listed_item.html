@@ -1,0 +1,55 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    todos: <br>
+    1. Condition if this is on the USER login watchlists <br>
+    2. IF not on the watchlist - add button to add to watchlist <br><br><br>
+    
+    <div class="listing">    
+        <h2>Name: {{ item.item_name.title }}</h2>
+
+        <form action="{% url 'watchlists' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{ item.id }}" name="item_id">
+            <input type="submit" value="Add to watchlist" name="add-to-watchlist">
+        </form>
+
+        <br>
+        <img src="{{ item.image_url }}" alt="{{ item.item_name }}"><br><br>
+        <small>Is Active: <strong>{{ item.active }}</strong></small><br>
+        <small>Date Created: {{ item.date_created }}</small><br>
+        <small>Start Price: ${{ item.starting_price }}</small>
+        <h5>Current Price: ${{ item.current_price }}</h5>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" name="bid-amount" placeholder="Your bid..."><br>
+            <input type="submit" value="Submit Bid">
+        </form>
+
+        <h5>Details:</h5>
+        <ul>
+            <li>Description: {{ item.description }}</li>
+            <li>Category: {{ item.category.title }}</li>
+            <li>Listed by: {{ item.created_by.first_name.title }}</li>
+        </ul>
+
+    </div>    
+
+
+
+
+        <br>
+        <br>
+        <br>
+        todo: <br>
+        1. Display Item all attributes <br>
+        2. bid <br>
+        3. add to wishlist <br>
+        4. if user created.item -- can close the bid and win the highest bidder <br>
+    
+    
+
+{% endblock %}
+

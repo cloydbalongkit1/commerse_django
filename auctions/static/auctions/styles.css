@@ -12,7 +12,17 @@ img {
     height: 50px;
 }
 
+ul {
+    list-style: none;
+}
+
+
 .form-submit {
     margin-top: 5px;
 }
 
+
+.listing {
+    border: solid;
+    padding: 10px;
+}
