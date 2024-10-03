@@ -27,6 +27,11 @@ class AuctionListing(models.Model):
     active = models.BooleanField(default=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auction_listings")
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.current_price = self.starting_price
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.item_name} -> Start Price: {self.starting_price}"
 
