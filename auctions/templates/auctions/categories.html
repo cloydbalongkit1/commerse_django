@@ -11,12 +11,11 @@
             <option value="home">Home</option>
             <option value="electronics">Electronics</option>
         </select>
-        <button type="submit">Submit</button>
+        <button type="submit">Search</button>
     </form>
     <br><br>
 
     {% if categories %}
-        <p>Not categorized item/s.</p>
         <div id="items">
             {% for category in categories %}
                 <div>

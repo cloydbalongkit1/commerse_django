@@ -12,6 +12,7 @@ urlpatterns = [
     path("remove_item", views.remove_item, name="remove_item"),
     path("categories", views.categories, name="categories"),
     path("listed_item/<int:id>", views.listed_item, name="listed_item"),
+    path("my_bid", views.my_bid, name="my_bid"),
 ]
 
 

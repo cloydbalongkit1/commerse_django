@@ -2,6 +2,14 @@
 
 {% block body %}
 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <h2>Active Listings</h2>
 
     <ul>
@@ -15,7 +23,8 @@
 
                     <div class="listings">
                         <p>Description: {{ listing.description }}</p>
-                        <p>Price: <strong>${{ listing.starting_price }}</strong></p>
+                        <small>Starting Price: <strong>${{ listing.starting_price }}</strong></small>
+                        <p>Current Price: <strong>${{ listing.current_price }}</strong></p>
 
                         {% if listing.active %}
                             <small>Item status: <strong>Active</strong></small>

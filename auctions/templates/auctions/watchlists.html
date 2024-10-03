@@ -2,6 +2,14 @@
 
 {% block body %}
 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                Request {{ message }}!
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <h2>{{ watchlists.user.title }} Watchlists</h2>
 
     <ul>
@@ -11,11 +19,11 @@
 
                 <div>
 
-                    <p>Item: <a href="{% url 'listed_item' listing.id %}">{{ listing.auction_item.item_name.title }}</a></p>
+                    <p>Item: <a href="{% url 'listed_item' listing.auction_item.id %}">{{ listing.auction_item.item_name.title }}</a></p>
 
                     <div class="listings">
                         <p>Description: {{ listing.auction_item.description }}</p>
-                        <p>Price: <strong>${{ listing.auction_item.starting_price }}</strong></p>
+                        <p>Current Price: <strong>${{ listing.auction_item.current_price }}</strong></p>
                         <small>Created {{ listing.auction_item.date_created }}</small>
                     </div>
                 </div>

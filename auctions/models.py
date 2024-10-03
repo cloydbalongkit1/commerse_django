@@ -42,7 +42,7 @@ class AuctionListing(models.Model):
 
 class Bids(models.Model):
     auction_item = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, related_name="bids")
-    bid_amount = models.DecimalField(max_digits=12, decimal_places=2)
+    bid_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     bid_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
     bid_time = models.DateTimeField(auto_now_add=True)
 

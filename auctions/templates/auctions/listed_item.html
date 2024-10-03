@@ -5,24 +5,29 @@
     <div class="listing">    
         <h2>Name: {{ item.item_name.title }}</h2>
 
-        <form action="{% url 'watchlists' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" value="{{ item.id }}" name="item_id">
-            <input type="submit" value="Add to watchlist" name="add-to-watchlist">
-        </form>
-
+        {% if user.is_authenticated %}
+            <form action="{% url 'watchlists' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ item.id }}" name="item_id">
+                <input type="submit" value="Add to watchlist" name="add-to-watchlist">
+            </form>
+        {% endif %}
         <br>
+
         <img src="{{ item.image_url }}" alt="{{ item.item_name }}"><br><br>
         <small>Is Active: <strong>{{ item.active }}</strong></small><br>
         <small>Date Created: {{ item.date_created }}</small><br>
-        <small>Start Price: ${{ item.starting_price }}</small>
-        <h5>Current Price: ${{ item.current_price }}</h5>
+        <small>Starting Price: ${{ item.starting_price }}</small>
+        <p>Current Price: <strong>${{ item.current_price }}</strong></p>
 
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="text" name="bid-amount" placeholder="Your bid..."><br>
-            <input type="submit" value="Submit Bid">
-        </form>
+        {% if user.is_authenticated %}
+            <form action="{% url 'my_bid' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ item.id }}" name="item_id">
+                <input required type="number" step="0.01" name="bid-amount" placeholder="Your bid..."><br>
+                <input type="submit" value="Submit Bid">
+            </form>
+        {% endif %}
 
         <h5>Details:</h5>
         <ul>
