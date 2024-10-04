@@ -10,22 +10,18 @@
         {% endfor %}
     {% endif %}
 
-    <h2>Active Listings</h2>
+    <h4>Active Listings</h4>
 
     <ul>
         {% for listing in listings %}
             <li>
-                <img src="{{ listing.image_url }}" alt="{{ listing.item_name }}">
-
+                <p><img src="{{ listing.image_url }}" alt="{{ listing.item_name }}"></p>
                 <div>
-
                     <p>Item: <a href="{% url 'listed_item' listing.id %}">{{ listing.item_name.title }}</a></p>
-
                     <div class="listings">
                         <p>Description: {{ listing.description }}</p>
                         <small>Starting Price: <strong>${{ listing.starting_price }}</strong></small>
                         <p>Current Price: <strong>${{ listing.current_price }}</strong></p>
-
                         {% if listing.active %}
                             <small>Item status: <strong>Active</strong></small>
                             <br>
@@ -34,11 +30,8 @@
                             <br>
                         {% endif %}
                         <small>Created {{ listing.date_created }}</small>
-
                     </div>
-
                 </div>
-
             </li>
             <hr>
         {% endfor %}

@@ -1,17 +1,9 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    
-    <div class="listing">    
+  
         <h2>Name: {{ item.item_name.title }}</h2>
 
-        {% if user.is_authenticated %}
-            <form action="{% url 'watchlists' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" value="{{ item.id }}" name="item_id">
-                <input type="submit" value="Add to watchlist" name="add-to-watchlist">
-            </form>
-        {% endif %}
         <br>
 
         <img src="{{ item.image_url }}" alt="{{ item.item_name }}"><br><br>
@@ -21,12 +13,17 @@
         <p>Current Price: <strong>${{ item.current_price }}</strong></p>
 
         {% if user.is_authenticated %}
-            <form action="{% url 'my_bid' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" value="{{ item.id }}" name="item_id">
-                <input required type="number" step="0.01" name="bid-amount" placeholder="Your bid..."><br>
-                <input type="submit" value="Submit Bid">
+            <form action="{% url 'my_bid' %}" method="post" class="row align-items-center">
+                <div class="col-auto">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ item.id }}" name="item_id">
+                    <input required type="number" step="0.01" name="bid-amount" placeholder="Your bid..." class="form-control">
+                </div>
+                <div class="col-auto">
+                    <input type="submit" value="Submit Bid" class="btn btn-primary">
+                </div>
             </form>
+            <br>    
         {% endif %}
 
         <h5>Details:</h5>
@@ -35,8 +32,23 @@
             <li>Category: {{ item.category.title }}</li>
             <li>Listed by: {{ item.created_by.first_name.title }}</li>
         </ul>
+        <br>
 
-    </div>    
+        {% if user.is_authenticated %}
+            <div class="d-flex justify-content-start mb-3">
+                <form action="{% url 'watchlists' %}" method="post" class="mr-3">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ item.id }}" name="item_id">
+                    <input type="submit" value="Add to watchlist" name="add-to-watchlist" class="btn btn-primary">
+                </form>
+            {% if user == item.created_by %}
+                <form action="{% url 'item_deleted' item.id %}" method="post">
+                    <input type="button" class="btn btn-danger" value="Delete">
+                </form>
+            </div>
+            {% endif %}
+        {% endif %}
+
     
 
 {% endblock %}

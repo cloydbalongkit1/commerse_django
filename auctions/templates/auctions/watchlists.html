@@ -5,12 +5,12 @@
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }}" role="alert">
-                Request {{ message }}!
+                {{ message }}
             </div>
         {% endfor %}
     {% endif %}
 
-    <h2>{{ watchlists.user.title }} Watchlists</h2>
+    <h4>{{ watchlists.user.title }} Watchlists</h4>
 
     <ul>
         {% for listing in watchlists %}
@@ -29,8 +29,8 @@
                 </div>
                 <form action="{% url 'remove_item' %}" method="post">
                     {% csrf_token %}
-                    <input type="hidden" value="{{ listing.auction_item.id }}" name="item_id">
-                    <input type="submit" value="Remove Item">
+                    <input type="hidden" value="{{ listing.auction_item.id }}" name="item_id"><br>
+                    <input type="submit" value="Remove Item" class="btn btn-warning">
                 </form>
             </li>
             

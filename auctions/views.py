@@ -21,31 +21,42 @@ def index(request):
 
 def listed_item(request, id):
     item = get_object_or_404(AuctionListing, id=id)
-    return render(request, 'auctions/listed_item.html', {
+    return render(request, "auctions/listed_item.html", {
         "item": item
     })
 
 
 
 @login_required
+def item_deleted(request, id):
+    auction_item = AuctionListing.objects.filter(id=id).first()
+    auction_item.delete()
+    messages.success(request, "Item removed from your watchlist.", extra_tags="success")
+    return redirect('index')
+
+
+
+@login_required
 def my_bid(request):
     if request.method == "POST":
-        my_bid = float(request.POST.get('bid-amount'))
-        item = get_object_or_404(AuctionListing, id=request.POST.get('item_id'))
+        my_bid = float(request.POST.get("bid-amount"))
+        item = get_object_or_404(AuctionListing, id=request.POST.get("item_id"))
         user = get_object_or_404(User, id=request.user.id)
-        highest_bid = Bids.objects.filter(auction_item=item).order_by('-bid_amount').first() #Searching all bid amounts RETURNS highest
+        highest_bid = Bids.objects.filter(auction_item=item).order_by("-bid_amount").first()
 
         if highest_bid is None:
-            highest_bid = 0
-            
-        if my_bid > item.current_price and my_bid > highest_bid: #my_bid must be greater than current price and highest bidder
-            bidding = Bids(auction_item=item, bid_by=user, bid_amount=my_bid) #saving my the bid
+            highest_bid_amount = 0
+        else:
+            highest_bid_amount = highest_bid.bid_amount
+        
+        if my_bid > item.current_price and my_bid > highest_bid_amount:
+            bidding = Bids(auction_item=item, bid_by=user, bid_amount=my_bid)
             bidding.save()
-            AuctionListing.objects.filter(id=item.id).update(current_price=my_bid) #updating the current price on the AuctionListing
-            messages.success(request, "Request successful!", extra_tags='success')
+            AuctionListing.objects.filter(id=item.id).update(current_price=my_bid)
+            messages.success(request, "Bid request successful!", extra_tags="success")
             return redirect('index')
         else:
-            messages.error(request, "Request Fail! Your bid is equal or less than the current price.", extra_tags='danger')
+            messages.error(request, "Request Fail! Your bid is equal or less than the current price.", extra_tags="danger")
             return redirect('index')
 
 
@@ -54,6 +65,7 @@ def my_bid(request):
 def new_listing(request):
     if request.method == "POST":
         form = CreateListing(request.POST)
+
         if form.is_valid():
             new_list = AuctionListing(
                 item_name = form.cleaned_data['item_name'],
@@ -75,11 +87,12 @@ def new_listing(request):
 
 @login_required
 def watchlists(request):
+
     if request.method == "POST":
         auction_item = get_object_or_404(AuctionListing, id=request.POST.get('item_id'))
         add_to = WatchList(user=request.user, auction_item=auction_item)
         add_to.save()
-        messages.success(request, "Request successful!", extra_tags='success')
+        messages.success(request, "Add to watchlists successful!", extra_tags='success')
 
     watchlists = WatchList.objects.filter(user=request.user)[::-1]
     return render(request, 'auctions/watchlists.html', {
@@ -92,11 +105,13 @@ def remove_item(request):
     if request.method == "POST":
         auction_item = get_object_or_404(AuctionListing, id=request.POST.get('item_id'))
         watchlist_item = WatchList.objects.filter(user=request.user, auction_item=auction_item).first()
+
         if watchlist_item:
             watchlist_item.delete()
             messages.success(request, "Item removed from your watchlist.")
         else:
             messages.error(request, "Item not found in your watchlist.")
+
         return HttpResponseRedirect(reverse("watchlists"))
     
 
@@ -105,6 +120,7 @@ def remove_item(request):
 def categories(request):
     category = request.GET.get('category')
     categories = AuctionListing.objects.filter(category=category)
+
     return render(request, 'auctions/categories.html', {
         'categories': categories,
     })

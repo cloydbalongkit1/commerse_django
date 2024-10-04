@@ -12,28 +12,28 @@ class CreateListing(forms.Form):
     
     item_name = forms.CharField(label="Item Name", max_length=60, 
             widget=forms.TextInput(attrs={
-                'class': 'title',
+                'class': 'form-control',
                 'placeholder': 'Enter title here...'
             }))
     image_url = forms.URLField(label="Item Image URL", max_length=255, required=False, 
             widget=forms.URLInput(attrs={
-                'class': 'image-url',
+                'class': 'form-control',
                 'placeholder': 'Enter image URL here...'
             }))
     starting_price = forms.DecimalField(label="Starting price", max_digits=12, decimal_places=2,
                 widget=forms.NumberInput(attrs={
-                'class': 'starting_price',
+                'class': 'form-control',
                 'placeholder': 'Enter starting bid here...'
                }))
     category = forms.ChoiceField(label="Category",
                 choices=CHOICES,
                 required=False,
                 widget=forms.Select(attrs={
-                'class': 'category_class'
+                'class': 'form-control'
             }))
     description = forms.CharField(
             widget=forms.Textarea(attrs={
-                'class': 'description',
+                'class': 'form-control',
                 'placeholder': 'Enter description here...',
                 'rows': 5,
                 'cols': 100,

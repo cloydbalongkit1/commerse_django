@@ -3,7 +3,7 @@
 {% block body %}
 
     <form method="GET" action="{% url 'categories' %}">
-        <label for="categories">Choose a category:</label>
+        <label for="categories">Choose a category:</label><br>
         <select name="category">
             <option value="">Choose a category</option>
             <option value="fashion">Fashion</option>
@@ -11,7 +11,7 @@
             <option value="home">Home</option>
             <option value="electronics">Electronics</option>
         </select>
-        <button type="submit">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
     <br><br>
 
@@ -32,8 +32,8 @@
                 <hr>
             {% endfor %}
         </div>
-    
     {% endif %}
+
 
 {% endblock %}
 
