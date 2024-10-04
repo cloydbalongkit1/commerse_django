@@ -2,7 +2,7 @@
 
 {% block body %}
   
-        <h2>Name: {{ item.item_name.title }}</h2>
+        <h3>{{ item.item_name.upper }}</h3>
 
         <br>
 
@@ -41,18 +41,31 @@
         <br>
 
         {% if user.is_authenticated %}
+
             <div class="d-flex justify-content-start mb-3">
+
                 <form action="{% url 'watchlists' %}" method="post" class="mr-3">
                     {% csrf_token %}
                     <input type="hidden" value="{{ item.id }}" name="item_id">
                     <input type="submit" value="Add to watchlist" name="add-to-watchlist" class="btn btn-primary">
                 </form>
-            {% if user == item.created_by %}
-                <form action="{% url 'item_deleted' item.id %}" method="post">
-                    <input type="button" class="btn btn-danger" value="Delete">
-                </form>
+
+                {% if user == item.created_by %}
+                    <form action="{% url 'close_bid' item.id %}" method="post" class="mr-3">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-success" value="Close the bid?">
+                    </form>
+                {% endif %}
+
+                {% if user == item.created_by %}
+                    <form action="{% url 'item_deleted' item.id %}" method="post" class="mr-3"  >
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                {% endif %}
+
             </div>
-            {% endif %}
+            
         {% endif %}
 
 {% endblock %}

@@ -13,6 +13,20 @@ from .forms import CreateListing
 
 def index(request):
     auction_listings = AuctionListing.objects.all()[::-1]
+    
+    if request.user.is_authenticated:
+        if not request.session.get('message_shown', False):
+            try:
+                item_won = AuctionListing.objects.get(winner=request.user, winner_notified=False)
+                item_won.winner_notified = True
+                item_won.save()
+                request.session['message_shown'] = True
+                messages.success(request, 
+                    f"The auction has been closed. You won - {item_won.item_name.upper()} - at the price of ${item_won.current_price}.", 
+                    extra_tags="success")
+            except AuctionListing.DoesNotExist:
+                pass
+    
     return render(request, "auctions/index.html", {
         "listings": auction_listings
     })
@@ -24,6 +38,24 @@ def listed_item(request, id):
     return render(request, "auctions/listed_item.html", {
         "item": item
     })
+
+
+
+@login_required
+def close_bid(request, id):
+    closed_item = get_object_or_404(AuctionListing, id=id)
+    highest_bid = Bids.objects.filter(auction_item=closed_item).order_by("-bid_amount").first()
+
+    if highest_bid:
+        winner = highest_bid.bid_by
+        closed_item.winner = winner
+        closed_item.active = False
+        closed_item.save()
+        messages.success(request, f"The auction has been closed. The winner is {winner.username}.", extra_tags="success")
+    else:
+        messages.error(request, "No bids were placed on this item.", extra_tags="danger")
+
+    return redirect('index')
 
 
 

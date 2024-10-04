@@ -24,8 +24,10 @@ class AuctionListing(models.Model):
     current_price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     date_created = models.DateTimeField(auto_now_add=True)
     date_ended = models.DateTimeField(blank=True, null=True)
-    active = models.BooleanField(default=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auction_listings")
+    active = models.BooleanField(default=True)
+    winner = models.ForeignKey(User, related_name='won_auctions', on_delete=models.SET_NULL, null=True, blank=True)
+    winner_notified = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -33,7 +35,7 @@ class AuctionListing(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.item_name} -> Start Price: {self.starting_price}"
+        return f"{self.item_name} -> Start Price: {self.starting_price} -> Current Price: {self.current_price}"
 
     class Meta:
         verbose_name_plural = "Auction Listings"

@@ -16,11 +16,9 @@
         {% for listing in watchlists %}
             <li>
                 <img src="{{ listing.auction_item.image_url }}" alt="{{ listing.auction_item.item_name }}">
-
                 <div>
-
-                    <p>Item: <a href="{% url 'listed_item' listing.auction_item.id %}">{{ listing.auction_item.item_name.title }}</a></p>
-
+                    <br>
+                    <h5><a href="{% url 'listed_item' listing.auction_item.id %}">{{ listing.auction_item.item_name.upper }}</a></h5>
                     <div class="listings">
                         <p>Description: {{ listing.auction_item.description }}</p>
                         <p>Current Price: <strong>${{ listing.auction_item.current_price }}</strong></p>

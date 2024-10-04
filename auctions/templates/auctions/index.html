@@ -17,7 +17,7 @@
             <li>
                 <p><img src="{{ listing.image_url }}" alt="{{ listing.item_name }}"></p>
                 <div>
-                    <p>Item: <a href="{% url 'listed_item' listing.id %}">{{ listing.item_name.title }}</a></p>
+                    <h5><a href="{% url 'listed_item' listing.id %}">{{ listing.item_name.upper }}</a></h5>
                     <div class="listings">
                         <p>Description: {{ listing.description }}</p>
                         <small>Starting Price: <strong>${{ listing.starting_price }}</strong></small>
