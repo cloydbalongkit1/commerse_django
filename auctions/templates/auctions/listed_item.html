@@ -7,7 +7,13 @@
         <br>
 
         <img src="{{ item.image_url }}" alt="{{ item.item_name }}"><br><br>
-        <small>Is Active: <strong>{{ item.active }}</strong></small><br>
+
+        {% if item.active %}
+            <small>Status: <strong>Active</strong></small><br>
+        {% else %}
+            <small>Status: <strong>Inactive</strong></small><br>
+        {% endif %}
+
         <small>Date Created: {{ item.date_created }}</small><br>
         <small>Starting Price: ${{ item.starting_price }}</small>
         <p>Current Price: <strong>${{ item.current_price }}</strong></p>
@@ -48,8 +54,6 @@
             </div>
             {% endif %}
         {% endif %}
-
-    
 
 {% endblock %}
 
