@@ -1,11 +1,17 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
   
         <h3>{{ item.item_name.upper }}</h3>
-
         <br>
-
         <img src="{{ item.image_url }}" alt="{{ item.item_name }}"><br><br>
 
         {% if item.active %}
@@ -37,9 +43,27 @@
             <li>Description: {{ item.description }}</li>
             <li>Category: {{ item.category.title }}</li>
             <li>Listed by: {{ item.created_by.first_name.title }}</li>
+            <li>Comments:</li>
+                <ol>
+                    {% if comments %}
+                        {% for comment in comments %}
+                            <li>
+                                <p class="mb-0">
+                                    {{ comment.comments }}
+                                </p>
+                                <small>
+                                    BY: {{ comment.comment_by.username }}
+                                </small>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                    <li>
+                        <small>No Comments</small>
+                    </li>
+                    {% endif %}
+                </ol>
         </ul>
         <br>
-
         {% if user.is_authenticated %}
 
             <div class="d-flex justify-content-start mb-3">
@@ -64,6 +88,15 @@
                     </form>
                 {% endif %}
 
+            </div>
+
+            <div class="d-flex justify-content-start mb-3">
+                <form action="{% url 'comments' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ item.id }}" name="item_id">
+                    <input type="text" name="user-comment" placeholder="Comments..." class="form-control mt-3">
+                    <input type="submit" value="Add Comment" class="btn btn-primary mt-2">
+                </form>
             </div>
             
         {% endif %}

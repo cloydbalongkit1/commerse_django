@@ -35,9 +35,27 @@ def index(request):
 
 def listed_item(request, id):
     item = get_object_or_404(AuctionListing, id=id)
+    item_comments = Comments.objects.filter(commented_item=item)
     return render(request, "auctions/listed_item.html", {
-        "item": item
+        "item": item,
+        'comments': item_comments,
     })
+
+
+
+@login_required
+def comments(request):
+    if request.method == "POST":
+        item_commented = get_object_or_404(AuctionListing, id=request.POST.get('item_id'))
+        current_user_comment = request.POST.get('user-comment')
+        current_user = get_object_or_404(User, username=request.user)
+        db_comments = Comments(commented_item=item_commented, 
+                               comment_by=current_user, 
+                               comments=current_user_comment)
+        db_comments.save()
+        messages.success(request, "Comment posted!", extra_tags="success")
+        return redirect('listed_item', id=item_commented.id)
+
 
 
 
