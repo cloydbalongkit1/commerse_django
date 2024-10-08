@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auctions', '0006_rename_watchlist_user_watchlists'),
+        ("auctions", "0006_rename_watchlist_user_watchlists"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='auctionlisting',
-            name='id',
+            model_name="auctionlisting",
+            name="id",
             field=models.BigAutoField(primary_key=True, serialize=False),
         ),
         migrations.AlterField(
-            model_name='bids',
-            name='id',
+            model_name="bids",
+            name="id",
             field=models.BigAutoField(primary_key=True, serialize=False),
         ),
         migrations.AlterField(
-            model_name='comments',
-            name='id',
+            model_name="comments",
+            name="id",
             field=models.BigAutoField(primary_key=True, serialize=False),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='id',
+            model_name="user",
+            name="id",
             field=models.BigAutoField(primary_key=True, serialize=False),
         ),
     ]

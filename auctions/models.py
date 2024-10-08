@@ -2,17 +2,16 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-
-CHOICES = [('fashion', 'Fashion'),
-            ('toys', 'Toys'),
-            ('electronics', 'Electronics'),
-            ('home', 'Home')
-        ]
+CHOICES = [
+    ("fashion", "Fashion"),
+    ("toys", "Toys"),
+    ("electronics", "Electronics"),
+    ("home", "Home"),
+]
 
 
 class User(AbstractUser):
     pass
-
 
 
 class AuctionListing(models.Model):
@@ -24,9 +23,17 @@ class AuctionListing(models.Model):
     current_price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     date_created = models.DateTimeField(auto_now_add=True)
     date_ended = models.DateTimeField(blank=True, null=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auction_listings")
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="auction_listings"
+    )
     active = models.BooleanField(default=True)
-    winner = models.ForeignKey(User, related_name='won_auctions', on_delete=models.SET_NULL, null=True, blank=True)
+    winner = models.ForeignKey(
+        User,
+        related_name="won_auctions",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     winner_notified = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
@@ -41,9 +48,10 @@ class AuctionListing(models.Model):
         verbose_name_plural = "Auction Listings"
 
 
-
 class Bids(models.Model):
-    auction_item = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, related_name="bids")
+    auction_item = models.ForeignKey(
+        AuctionListing, on_delete=models.CASCADE, related_name="bids"
+    )
     bid_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     bid_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
     bid_time = models.DateTimeField(auto_now_add=True)
@@ -55,10 +63,13 @@ class Bids(models.Model):
         verbose_name_plural = "Bids"
 
 
-
 class Comments(models.Model):
-    commented_item = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, related_name="comments")
-    comment_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
+    commented_item = models.ForeignKey(
+        AuctionListing, on_delete=models.CASCADE, related_name="comments"
+    )
+    comment_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="comments"
+    )
     comments = models.CharField(max_length=500)
     comment_time = models.DateTimeField(auto_now_add=True)
 
@@ -69,10 +80,11 @@ class Comments(models.Model):
         verbose_name_plural = "Comments"
 
 
-
 class WatchList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlists")
-    auction_item = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, related_name="watchlists")
+    auction_item = models.ForeignKey(
+        AuctionListing, on_delete=models.CASCADE, related_name="watchlists"
+    )
     added_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -80,4 +92,3 @@ class WatchList(models.Model):
 
     class Meta:
         verbose_name_plural = "Watch Lists"
-

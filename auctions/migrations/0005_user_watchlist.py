@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auctions', '0004_alter_auctionlisting_date_ending_and_more'),
+        ("auctions", "0004_alter_auctionlisting_date_ending_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='watchlist',
-            field=models.ManyToManyField(blank=True, related_name='watchlisted_by', to='auctions.auctionlisting'),
+            model_name="user",
+            name="watchlist",
+            field=models.ManyToManyField(
+                blank=True, related_name="watchlisted_by", to="auctions.auctionlisting"
+            ),
         ),
     ]

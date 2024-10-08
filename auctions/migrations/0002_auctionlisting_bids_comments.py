@@ -8,41 +8,106 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auctions', '0001_initial'),
+        ("auctions", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AuctionListing',
+            name="AuctionListing",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('item_name', models.CharField(max_length=100)),
-                ('description', models.CharField(max_length=255)),
-                ('starting_price', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('current_price', models.DecimalField(decimal_places=2, default=0, max_digits=12)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('date_ending', models.DateTimeField()),
-                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='auction_listings', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("item_name", models.CharField(max_length=100)),
+                ("description", models.CharField(max_length=255)),
+                (
+                    "starting_price",
+                    models.DecimalField(decimal_places=2, max_digits=12),
+                ),
+                (
+                    "current_price",
+                    models.DecimalField(decimal_places=2, default=0, max_digits=12),
+                ),
+                ("date_created", models.DateTimeField(auto_now_add=True)),
+                ("date_ending", models.DateTimeField()),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="auction_listings",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Bids',
+            name="Bids",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('bid_amount', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('bid_time', models.DateTimeField(auto_now_add=True)),
-                ('auction_listing', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bids', to='auctions.auctionlisting')),
-                ('bid_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bids', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("bid_amount", models.DecimalField(decimal_places=2, max_digits=12)),
+                ("bid_time", models.DateTimeField(auto_now_add=True)),
+                (
+                    "auction_listing",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="bids",
+                        to="auctions.auctionlisting",
+                    ),
+                ),
+                (
+                    "bid_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="bids",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Comments',
+            name="Comments",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('comment', models.CharField(max_length=500)),
-                ('comment_time', models.DateTimeField(auto_now_add=True)),
-                ('auction_listing', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='auctions.auctionlisting')),
-                ('comment_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("comment", models.CharField(max_length=500)),
+                ("comment_time", models.DateTimeField(auto_now_add=True)),
+                (
+                    "auction_listing",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comments",
+                        to="auctions.auctionlisting",
+                    ),
+                ),
+                (
+                    "comment_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="comments",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

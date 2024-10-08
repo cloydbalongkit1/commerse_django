@@ -6,30 +6,40 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auctions', '0002_auctionlisting_bids_comments'),
+        ("auctions", "0002_auctionlisting_bids_comments"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='auctionlisting',
-            options={'verbose_name_plural': 'Auction Listings'},
+            name="auctionlisting",
+            options={"verbose_name_plural": "Auction Listings"},
         ),
         migrations.AlterModelOptions(
-            name='bids',
-            options={'verbose_name_plural': 'Bids'},
+            name="bids",
+            options={"verbose_name_plural": "Bids"},
         ),
         migrations.AlterModelOptions(
-            name='comments',
-            options={'verbose_name_plural': 'Comments'},
+            name="comments",
+            options={"verbose_name_plural": "Comments"},
         ),
         migrations.AddField(
-            model_name='auctionlisting',
-            name='category',
-            field=models.CharField(blank=True, choices=[('fashion', 'Fashion'), ('toys', 'Toys'), ('electronics', 'Electronics'), ('home', 'Home')], max_length=50, null=True),
+            model_name="auctionlisting",
+            name="category",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("fashion", "Fashion"),
+                    ("toys", "Toys"),
+                    ("electronics", "Electronics"),
+                    ("home", "Home"),
+                ],
+                max_length=50,
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='auctionlisting',
-            name='image_url',
+            model_name="auctionlisting",
+            name="image_url",
             field=models.URLField(blank=True, max_length=255),
         ),
     ]

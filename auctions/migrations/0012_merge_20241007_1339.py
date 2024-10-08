@@ -6,9 +6,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auctions', '0004_alter_auctionlisting_description'),
-        ('auctions', '0011_auctionlisting_winner_notified'),
+        ("auctions", "0004_alter_auctionlisting_description"),
+        ("auctions", "0011_auctionlisting_winner_notified"),
     ]
 
-    operations = [
-    ]
+    operations = []
